@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  if (location.hash) {
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+  window.scrollTo(0, 0);
+</script>
+<meta name="theme-color" content="#111111" />
+<title>Catch Up — Websites Built to Convert</title>
+<meta name="description" content="Catch Up designs and builds fast, modern websites for ambitious brands — from concept to launch, built around a real conversation." />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111111'/%3E%3Ctext x='16' y='23' font-family='Arial, Helvetica, sans-serif' font-weight='900' font-size='19' fill='%23E8570A' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'cu-orange': '#E8570A',
+          'cu-ink': '#111111',
+          'cu-charcoal': '#1A1A1A',
+          'cu-grey': '#F5F5F5',
+          'cu-maroon': '#5C1A0A',
+          'cu-amber': '#F5A623',
+          'cu-rust': '#3D1B0A',
+        },
+        fontFamily: {
+          display: ['"Archivo Black"', 'Arial Black', 'sans-serif'],
+          body: ['"Space Grotesk"', 'sans-serif'],
+        },
+        letterSpacing: {
+          tightest2: '-0.04em',
+          label: '0.3em',
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  :root { color-scheme: light; }
+
+  * { -webkit-font-smoothing: antialiased; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #FFFFFF;
+    color: #111111;
+  }
+
+  h1, h2, h3, .font-display { font-family: 'Archivo Black', 'Arial Black', sans-serif; }
+
+  ::selection { background-color: #E8570A; color: #FFFFFF; }
+
+  /* Grain overlay */
+  .grain { position: relative; isolation: isolate; }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 1;
+  }
+
+  /* Glow blobs */
+  .glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(110px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.55; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.12); }
+  }
+  .glow-pulse { animation: glow-pulse 9s ease-in-out infinite; }
+
+  /* Animated background circles (sits behind hero copy) */
+  .circles-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .circles-grid {
+    position: absolute;
+    inset: -10%;
+    -webkit-mask-image: radial-gradient(ellipse at center, transparent 30%, black 75%);
+            mask-image: radial-gradient(ellipse at center, transparent 30%, black 75%);
+  }
+  .circles-grid-inner {
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(100deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.6) 1px, transparent 1px, transparent 4%);
+    background-size: 200% 200%;
+    opacity: 0.05;
+    animation: circles-grid-pan 40s linear infinite;
+  }
+  @keyframes circles-grid-pan {
+    from { background-position: 0% 0%; }
+    to { background-position: 100% 100%; }
+  }
+  .circles-rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(560px, 68vw);
+    height: min(560px, 68vw);
+    transform: translate(-50%, -50%);
+  }
+  .circle-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    border-width: 2px;
+    border-style: solid;
+    mix-blend-mode: screen;
+    animation: circle-spin-pulse 5s ease-in-out infinite;
+  }
+  .circle-ring--0 {
+    border-color: rgba(232, 87, 10, 0.6);
+    background: linear-gradient(135deg, rgba(232,87,10,0.30), transparent 70%);
+    --ring-scale: 1.05;
+  }
+  .circle-ring--1 {
+    border-color: rgba(245, 166, 35, 0.45);
+    background: linear-gradient(135deg, rgba(245,166,35,0.22), transparent 70%);
+    --ring-scale: 1.10;
+  }
+  .circle-ring--2 {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 70%);
+    --ring-scale: 1.15;
+  }
+  @keyframes circle-spin-pulse {
+    0%   { transform: rotate(0deg) scale(1); opacity: 0.8; }
+    50%  { transform: rotate(180deg) scale(var(--ring-scale, 1.05)); opacity: 1; }
+    100% { transform: rotate(360deg) scale(1); opacity: 0.8; }
+  }
+  .circles-glow-wrap {
+    position: absolute;
+    inset: 0;
+    -webkit-mask-image: radial-gradient(90% 60% at 50% 50%, #000 40%, transparent);
+            mask-image: radial-gradient(90% 60% at 50% 50%, #000 40%, transparent);
+  }
+  .circles-glow-1 {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(232,87,10,0.30), transparent 70%);
+    filter: blur(120px);
+  }
+  .circles-glow-2 {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(245,166,35,0.16), transparent 70%);
+    filter: blur(80px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .circles-grid-inner, .circle-ring { animation: none; }
+  }
+
+  /* Starfield */
+  .stars-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+  .star-layer { position: absolute; top: 0; left: 0; border-radius: 50%; background: transparent; }
+  .star-sm {
+    width: 1px; height: 1px; opacity: .55;
+    box-shadow: 1309px 228px #fff, 51px 1518px #fff, 563px 501px #fff, 457px 285px #fff, 1508px 209px #fff, 1385px 1516px #fff, 1827px 1116px #fff, 178px 1209px #fff, 864px 65px #fff, 61px 191px #fff, 447px 476px #fff, 1034px 1232px #fff, 54px 1149px #fff, 407px 1466px #fff, 1330px 1436px #fff, 1116px 859px #fff, 451px 919px #fff, 1206px 569px #fff, 1657px 1780px #fff, 13px 1554px #fff, 1650px 326px #fff, 1429px 865px #fff, 696px 569px #fff, 318px 440px #fff, 1960px 1563px #fff, 689px 209px #fff, 189px 778px #fff, 198px 735px #fff, 1735px 704px #fff, 1236px 541px #fff, 1652px 88px #fff, 1494px 940px #fff, 1098px 255px #fff, 1992px 1888px #fff, 775px 161px #fff, 1130px 600px #fff, 1698px 1287px #fff, 1266px 1813px #fff, 1764px 740px #fff, 1182px 393px #fff, 1442px 142px #fff, 93px 1354px #fff, 466px 1583px #fff, 592px 163px #fff, 1751px 476px #fff, 1774px 206px #fff, 778px 569px #fff, 928px 1301px #fff, 1708px 747px #fff, 333px 758px #fff, 727px 429px #fff, 1372px 546px #fff, 1437px 1918px #fff, 1399px 1327px #fff, 146px 1247px #fff, 1300px 350px #fff, 1093px 1493px #fff, 501px 334px #fff, 946px 777px #fff, 552px 1895px #fff, 1310px 1409px #fff, 1140px 449px #fff, 1402px 664px #fff, 1726px 1573px #fff, 1589px 114px #fff, 469px 1683px #fff, 65px 1648px #fff, 646px 821px #fff, 548px 135px #fff, 432px 1870px #fff, 1931px 1161px #fff, 1794px 1470px #fff, 644px 435px #fff, 1342px 1022px #fff, 810px 1811px #fff, 1872px 1316px #fff, 939px 292px #fff, 542px 285px #fff, 505px 1525px #fff, 1149px 1103px #fff, 538px 1529px #fff, 1197px 877px #fff, 1838px 1195px #fff, 817px 741px #fff, 449px 283px #fff, 1043px 1010px #fff, 186px 1547px #fff, 96px 1763px #fff, 224px 313px #fff, 1285px 327px #fff, 1622px 1393px #fff, 864px 1221px #fff, 130px 788px #fff, 781px 1220px #fff, 958px 1083px #fff, 514px 1988px #fff, 1133px 1762px #fff, 1930px 23px #fff, 1393px 1476px #fff, 234px 1396px #fff, 1812px 1099px #fff, 1537px 546px #fff, 1574px 1312px #fff, 696px 228px #fff, 601px 890px #fff, 323px 929px #fff, 6px 1953px #fff, 1478px 1793px #fff, 1473px 539px #fff, 1990px 1025px #fff, 1560px 365px #fff, 1039px 1869px #fff, 217px 1782px #fff, 1280px 611px #fff, 1723px 1308px #fff, 1039px 1247px #fff, 407px 313px #fff, 765px 1561px #fff, 330px 1104px #fff, 1952px 1594px #fff;
+    animation: twinkle 5s ease-in-out infinite alternate;
+  }
+  .star-md {
+    width: 2px; height: 2px; opacity: .7;
+    box-shadow: 1889px 1086px #fff, 1881px 1px #fff, 1226px 663px #fff, 1000px 39px #fff, 229px 1902px #fff, 743px 1799px #fff, 1703px 1652px #fff, 629px 490px #fff, 118px 493px #fff, 1798px 1161px #fff, 1939px 161px #fff, 175px 1498px #fff, 995px 1671px #fff, 141px 1557px #fff, 1090px 1568px #fff, 257px 262px #fff, 1351px 973px #fff, 1939px 1125px #fff, 338px 542px #fff, 1080px 1786px #fff, 1242px 866px #fff, 1975px 433px #fff, 1902px 1104px #fff, 1546px 1494px #fff, 1412px 411px #fff, 1460px 638px #fff, 817px 1375px #fff, 1330px 764px #fff, 897px 1842px #fff, 1059px 924px #fff, 247px 507px #fff, 460px 131px #fff, 692px 43px #fff, 1204px 1134px #fff, 471px 1205px #fff, 451px 14px #fff, 145px 1449px #fff, 1292px 120px #fff, 468px 138px #fff, 1854px 64px #fff, 1760px 676px #fff, 145px 1052px #fff, 487px 570px #fff, 1370px 994px #fff, 438px 1104px #fff, 270px 1481px #fff, 1915px 1807px #fff, 1169px 1180px #fff, 968px 497px #fff, 1606px 968px #fff;
+    animation: twinkle 7s ease-in-out infinite alternate-reverse;
+  }
+  .star-lg {
+    width: 3px; height: 3px; opacity: .85;
+    box-shadow: 1653px 833px #fff, 389px 193px #fff, 198px 1349px #fff, 882px 725px #fff, 867px 841px #fff, 956px 1769px #fff, 1493px 110px #fff, 1379px 1338px #fff, 1323px 201px #fff, 124px 824px #fff, 1491px 694px #fff, 1639px 1764px #fff, 223px 509px #fff, 392px 389px #fff, 1098px 918px #fff, 287px 864px #fff, 375px 570px #fff, 947px 511px #fff, 1790px 1890px #fff, 154px 907px #fff;
+    animation: twinkle 6s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { from { opacity: .2; } to { opacity: 1; } }
+
+  /* Shooting stars */
+  .shooting-star {
+    position: absolute;
+    width: 160px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,87,10,.9), transparent);
+    transform: rotate(-18deg);
+    opacity: 0;
+    animation: shoot 8s linear infinite;
+  }
+  @keyframes shoot {
+    0% { transform: translate(-160px,-60px) rotate(-18deg); opacity: 0; }
+    4% { opacity: 1; }
+    16% { opacity: 0; }
+    100% { transform: translate(900px,300px) rotate(-18deg); opacity: 0; }
+  }
+
+  /* Buttons */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    padding: 1rem 1.875rem;
+    border-radius: 2px;
+    overflow: hidden;
+    z-index: 0;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.35s ease;
+    will-change: transform;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .btn:hover::before { transform: scaleX(1); }
+  .btn:active { transform: translateY(1px) scale(0.99); }
+  .btn:focus-visible { outline: 2px solid #E8570A; outline-offset: 3px; }
+
+  .btn-filled {
+    background-color: #E8570A;
+    color: #FFFFFF;
+    box-shadow: 0 6px 20px -6px rgba(232, 87, 10, 0.55), 0 2px 6px -2px rgba(17,17,17,0.25);
+  }
+  .btn-filled::before { background-color: #111111; }
+  .btn-filled:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px -6px rgba(232, 87, 10, 0.45), 0 4px 10px -2px rgba(17,17,17,0.3);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: #E8570A;
+    border: 2px solid #E8570A;
+    padding: 0.875rem 1.75rem;
+  }
+  .btn-outline::before { background-color: #E8570A; }
+  .btn-outline:hover {
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px -8px rgba(232, 87, 10, 0.5);
+  }
+
+  .btn-outline-light {
+    background-color: transparent;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    padding: 0.875rem 1.75rem;
+  }
+  .btn-outline-light::before { background-color: #FFFFFF; }
+  .btn-outline-light:hover {
+    color: #E8570A;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px -8px rgba(0,0,0,0.25);
+  }
+
+  /* Text link with arrow */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    color: inherit;
+    transition: gap 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease;
+  }
+  .link-arrow svg { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+  .link-arrow:hover { gap: 1rem; }
+  .link-arrow:hover svg { transform: translateX(3px); }
+  .link-arrow:focus-visible { outline: 2px solid #E8570A; outline-offset: 3px; }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  /* Marquee */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 36s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Hero label fade-up */
+  .hero-fade {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: heroFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+  /* Hero word cycle */
+  .word-cycle-wrap {
+    display: inline-grid;
+  }
+  .word-cycle-wrap .word-layer {
+    grid-area: 1 / 1;
+    display: inline-block;
+    white-space: nowrap;
+    will-change: opacity, transform;
+  }
+  .word-cycle-wrap .word-layer:last-child { opacity: 0; }
+
+  /* Outline text */
+  .text-outline {
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.32);
+    color: transparent;
+  }
+  .text-outline-dark {
+    -webkit-text-stroke: 1.5px rgba(17,17,17,0.22);
+    color: transparent;
+  }
+
+  /* Full-screen menu */
+  .full-menu {
+    transform: translateY(-100%);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .full-menu.open { transform: translateY(0); }
+
+  /* Outlined numerals */
+  .num-outline {
+    -webkit-text-stroke: 1.5px rgba(17,17,17,0.15);
+    color: transparent;
+    transition: color 0.4s ease, -webkit-text-stroke 0.4s ease;
+  }
+  .num-outline-light {
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.18);
+    color: transparent;
+  }
+
+  /* Nav */
+  #site-nav { transition: background-color 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease; }
+  #site-nav.scrolled {
+    background-color: rgba(17,17,17,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom-color: rgba(255,255,255,0.08);
+  }
+
+  /* Card hover lift */
+  .lift { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease; }
+  .lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.5);
+    border-color: rgba(232,87,10,0.4);
+  }
+
+  /* Floating chat pill */
+  .chat-pill {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 30;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    background-color: #E8570A;
+    border: 1px solid rgba(17,17,17,0.08);
+    padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+    border-radius: 9999px;
+    box-shadow: 0 14px 36px -10px rgba(232,87,10,0.55), 0 4px 16px -4px rgba(0,0,0,0.35);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .chat-pill:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 18px 44px -10px rgba(232,87,10,0.7), 0 6px 20px -4px rgba(0,0,0,0.4);
+  }
+  .chat-pill:focus-visible { outline: 2px solid #111111; outline-offset: 3px; }
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(17,17,17,0.35); }
+    50% { box-shadow: 0 0 0 5px rgba(17,17,17,0); }
+  }
+  .pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
+
+  /* Floating badge (bounce) */
+  @keyframes float-badge {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-16px) rotate(1.5deg); }
+  }
+  .float-badge { animation: float-badge 4.5s ease-in-out infinite; }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .bob { animation: bob 2.6s ease-in-out infinite; }
+
+  /* Work card ghost label */
+  .ghost-label {
+    position: absolute;
+    bottom: -0.35em;
+    right: -0.04em;
+    font-family: 'Archivo Black', 'Arial Black', sans-serif;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgba(255,255,255,0.10);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* Loading screen */
+  #loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 35%, rgba(232,87,10,0.35), transparent 70%),
+      radial-gradient(ellipse 60% 50% at 65% 70%, rgba(245,166,35,0.18), transparent 70%),
+      #111111;
+    transition: opacity 0.7s ease;
+  }
+  #loading-screen.loader-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .loader-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    animation: loader-spin 5s linear infinite;
+  }
+  @keyframes loader-spin {
+    0% {
+      transform: rotate(90deg);
+      box-shadow:
+        0 6px 12px 0 #F5A623 inset,
+        0 12px 18px 0 #E8570A inset,
+        0 36px 36px 0 #5C1A0A inset,
+        0 0 3px 1.2px rgba(245, 166, 35, 0.35),
+        0 0 8px 2px rgba(232, 87, 10, 0.25);
+    }
+    50% {
+      transform: rotate(270deg);
+      box-shadow:
+        0 6px 12px 0 #FBC56B inset,
+        0 12px 6px 0 #E8570A inset,
+        0 24px 36px 0 #C2410C inset,
+        0 0 3px 1.2px rgba(245, 166, 35, 0.35),
+        0 0 8px 2px rgba(232, 87, 10, 0.25);
+    }
+    100% {
+      transform: rotate(450deg);
+      box-shadow:
+        0 6px 12px 0 #F5A623 inset,
+        0 12px 18px 0 #E8570A inset,
+        0 36px 36px 0 #5C1A0A inset,
+        0 0 3px 1.2px rgba(245, 166, 35, 0.35),
+        0 0 8px 2px rgba(232, 87, 10, 0.25);
+    }
+  }
+
+  .loader-status {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: opacity 0.5s ease;
+  }
+  #loader-generating.loader-fade-out { opacity: 0; }
+
+  .loader-letter {
+    display: inline-block;
+    color: #F5A623;
+    opacity: 0.35;
+    animation: loader-letter-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes loader-letter-pulse {
+    0%, 100% { opacity: 0.35; transform: translateY(0) scale(1); }
+    20% { opacity: 1; color: #E8570A; transform: scale(1.25); }
+    40% { opacity: 0.7; transform: translateY(0) scale(1); }
+  }
+
+  #loader-welcome { opacity: 0; }
+  #loader-welcome.loader-show { opacity: 1; }
+  .loader-welcome-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  #loader-welcome.loader-show .loader-welcome-letter {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .loader-welcome-line {
+    position: absolute;
+    bottom: -0.5em;
+    left: 50%;
+    width: 2.5rem;
+    height: 2px;
+    background: #E8570A;
+    transform: translateX(-50%) scaleX(0);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
+  }
+  #loader-welcome.loader-show .loader-welcome-line {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #loading-screen { display: none !important; }
+  }
+</style>
+</head>
+
+<body class="bg-white text-cu-ink overflow-x-hidden">
+
+<!-- ============ LOADING SCREEN ============ -->
+<div id="loading-screen" class="grain" aria-hidden="true">
+  <div class="relative flex flex-col items-center gap-7 sm:gap-8">
+    <div class="relative w-24 h-24 sm:w-32 sm:h-32">
+      <div class="loader-ring"></div>
+    </div>
+    <div class="relative h-8 sm:h-10 w-48 sm:w-60 flex items-center justify-center">
+      <p id="loader-generating" class="loader-status font-body text-[11px] sm:text-xs uppercase tracking-label">
+        <span class="loader-letter" style="animation-delay:0.00s">G</span>
+        <span class="loader-letter" style="animation-delay:0.08s">e</span>
+        <span class="loader-letter" style="animation-delay:0.16s">n</span>
+        <span class="loader-letter" style="animation-delay:0.24s">e</span>
+        <span class="loader-letter" style="animation-delay:0.32s">r</span>
+        <span class="loader-letter" style="animation-delay:0.40s">a</span>
+        <span class="loader-letter" style="animation-delay:0.48s">t</span>
+        <span class="loader-letter" style="animation-delay:0.56s">i</span>
+        <span class="loader-letter" style="animation-delay:0.64s">n</span>
+        <span class="loader-letter" style="animation-delay:0.72s">g</span>
+      </p>
+      <p id="loader-welcome" class="loader-status font-display uppercase text-2xl sm:text-3xl text-white tracking-tightest2">
+        <span class="loader-welcome-letter" style="transition-delay:0.00s">W</span>
+        <span class="loader-welcome-letter" style="transition-delay:0.04s">e</span>
+        <span class="loader-welcome-letter" style="transition-delay:0.08s">l</span>
+        <span class="loader-welcome-letter" style="transition-delay:0.12s">c</span>
+        <span class="loader-welcome-letter" style="transition-delay:0.16s">o</span>
+        <span class="loader-welcome-letter" style="transition-delay:0.20s">m</span>
+        <span class="loader-welcome-letter" style="transition-delay:0.24s">e</span>
+        <span class="loader-welcome-line" aria-hidden="true"></span>
+      </p>
+    </div>
+  </div>
+</div>
+<noscript><style>#loading-screen { display: none !important; }</style></noscript>
+<script>
+  (() => {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (!loadingScreen) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      loadingScreen.remove();
+      window.dispatchEvent(new Event('cu:loader-done'));
+      return;
+    }
+
+    document.body.classList.add('overflow-hidden');
+
+    // Pin the page to the hero (top) for the full duration of the loading
+    // screen, regardless of what tries to scroll/jump it in the meantime.
+    const pinToTop = () => window.scrollTo(0, 0);
+    window.addEventListener('scroll', pinToTop, { passive: true });
+    const pinInterval = setInterval(pinToTop, 50);
+
+    const generating = document.getElementById('loader-generating');
+    const welcome = document.getElementById('loader-welcome');
+
+    setTimeout(() => generating.classList.add('loader-fade-out'), 3000);
+    setTimeout(() => welcome.classList.add('loader-show'), 3250);
+    setTimeout(() => {
+      window.removeEventListener('scroll', pinToTop);
+      clearInterval(pinInterval);
+      loadingScreen.classList.add('loader-hidden');
+      document.body.classList.remove('overflow-hidden');
+      window.dispatchEvent(new Event('cu:loader-done'));
+    }, 4900);
+
+    loadingScreen.addEventListener('transitionend', (e) => {
+      if (e.propertyName === 'opacity' && loadingScreen.classList.contains('loader-hidden')) {
+        loadingScreen.remove();
+      }
+    });
+  })();
+</script>
+
+<!-- Skip link -->
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-cu-orange focus:text-white focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
+
+<!-- ============ NAV ============ -->
+<header id="site-nav" class="fixed top-0 inset-x-0 z-50 border-b border-transparent">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
+    <a href="#top" class="font-display text-xl sm:text-2xl tracking-tight text-white uppercase">Catch&nbsp;Up</a>
+
+    <button id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="full-menu" class="text-white p-2 -mr-2">
+      <svg id="icon-burger" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Full-screen menu -->
+<div id="full-menu" class="full-menu fixed inset-0 z-40 bg-cu-ink grain flex flex-col items-center justify-center gap-7 sm:gap-8">
+  <a href="#top" class="full-menu-link font-display text-4xl sm:text-5xl text-white uppercase tracking-tight">Home</a>
+  <a href="#services" class="full-menu-link font-display text-4xl sm:text-5xl text-white uppercase tracking-tight">Services</a>
+  <a href="#work" class="full-menu-link font-display text-4xl sm:text-5xl text-white uppercase tracking-tight">Work</a>
+  <a href="#why" class="full-menu-link font-display text-4xl sm:text-5xl text-white uppercase tracking-tight">Why Us</a>
+  <a href="#contact" class="full-menu-link font-display text-4xl sm:text-5xl text-white uppercase tracking-tight">Contact</a>
+  <a href="#contact" class="full-menu-link btn btn-filled mt-4">Let's Catch Up</a>
+</div>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative bg-cu-ink grain overflow-hidden min-h-screen flex items-center pt-28 pb-24 sm:pt-32 sm:pb-28">
+  <div class="stars-wrap">
+    <div class="star-layer star-sm"></div>
+    <div class="star-layer star-md"></div>
+    <div class="star-layer star-lg"></div>
+    <span class="shooting-star" style="top:30%; left:4%;"></span>
+    <span class="shooting-star" style="top:62%; left:55%; animation-delay:4.5s;"></span>
+  </div>
+  <div class="circles-bg" aria-hidden="true">
+    <div class="circles-grid">
+      <div class="circles-grid-inner"></div>
+    </div>
+    <div class="circles-rings">
+      <div class="circle-ring circle-ring--0"></div>
+      <div class="circle-ring circle-ring--1" style="animation-delay:-1.5s"></div>
+      <div class="circle-ring circle-ring--2" style="animation-delay:-3s"></div>
+    </div>
+    <div class="circles-glow-wrap">
+      <div class="circles-glow-1"></div>
+      <div class="circles-glow-2"></div>
+    </div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 w-full">
+    <div class="max-w-2xl">
+      <p class="hero-fade flex items-start gap-3 sm:gap-4 font-body text-[11px] sm:text-xs uppercase tracking-label text-cu-orange mb-8" style="animation-delay:0.05s">
+        <span class="w-8 h-px bg-cu-orange/60 mt-2 flex-shrink-0"></span>
+        <span>Still sending traffic to a site that doesn't convert?</span>
+      </p>
+
+      <h1 class="hero-fade font-display uppercase leading-[1.02] text-5xl sm:text-7xl lg:text-[5.5rem] tracking-tightest2" style="animation-delay:0.15s">
+        <span class="block font-body normal-case italic font-medium text-outline text-4xl sm:text-6xl lg:text-7xl mb-1 sm:mb-2 tracking-tight">We design</span>
+        <span class="block text-white relative">
+          <span id="cycle-word" class="word-cycle-wrap text-cu-orange" aria-live="off">
+            <span class="word-layer">websites</span>
+            <span class="word-layer" aria-hidden="true"></span>
+          </span>
+        </span>
+        <span class="block text-white">that convert.</span>
+      </h1>
+
+      <p class="hero-fade font-body text-white/70 text-base sm:text-lg leading-relaxed mt-8 max-w-md" style="animation-delay:0.3s">
+        We don't template it and walk away. Every project starts with a real conversation about your brand, your customers and what you actually need — then we design and build a site that looks sharp and works even harder.
+      </p>
+
+      <div class="hero-fade flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8 mt-10" style="animation-delay:0.45s">
+        <a href="#contact" class="btn btn-filled">Start the Conversation
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+        <a href="#work" class="link-arrow text-white/80 hover:text-cu-orange">
+          See Our Work
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ YOUR NEXT WEBSITE (GLOW STATEMENT) ============ -->
+<section class="relative bg-cu-ink grain overflow-hidden py-28 sm:py-44">
+  <div class="stars-wrap">
+    <div class="star-layer star-sm"></div>
+  </div>
+  <div class="glow glow-pulse w-[640px] h-[640px] bg-cu-orange/30 top-1/2 left-1/2"></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-6 text-center reveal">
+    <h2 class="font-display uppercase text-white text-5xl sm:text-7xl lg:text-8xl tracking-tightest2 leading-[1.05]">
+      Your next website
+    </h2>
+    <p class="font-body italic font-medium text-outline text-4xl sm:text-6xl lg:text-7xl mt-3 sm:mt-4 tracking-tight">
+      starts with a conversation.
+    </p>
+  </div>
+</section>
+
+<!-- ============ CREAM BREAK + FLOATING BADGE ============ -->
+<section class="relative bg-cu-grey overflow-hidden border-y border-cu-ink/5 pt-24 pb-32 sm:pt-32 sm:pb-44">
+  <div class="absolute left-6 sm:left-16 bottom-10 sm:bottom-14 float-badge">
+    <a href="#contact" class="flex items-center gap-3 sm:gap-4 bg-cu-ink text-white rounded-full pl-2.5 pr-6 py-2.5 shadow-[0_18px_44px_-14px_rgba(17,17,17,0.45)] hover:shadow-[0_22px_54px_-12px_rgba(232,87,10,0.4)] transition-shadow duration-300">
+      <span class="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-cu-orange flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 sm:w-7 sm:h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h10a2 2 0 012 2v5a2 2 0 01-2 2H9l-4 3v-3H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" d="M17 5h1a2 2 0 012 2v5a2 2 0 01-2 2h-.5" /></svg>
+      </span>
+      <span class="font-display uppercase text-sm sm:text-lg tracking-tight">Let's Chat — Work With Us</span>
+    </a>
+  </div>
+
+  <div class="relative z-10 max-w-2xl mx-auto px-6 text-center reveal">
+    <p class="font-body text-cu-ink/40 text-xs uppercase tracking-label">Real designers. Real conversations. No templates, no shortcuts.</p>
+  </div>
+</section>
+
+<!-- ============ SERVICES MARQUEE ============ -->
+<section class="relative bg-cu-grey py-7 sm:py-9 overflow-hidden border-b border-cu-ink/5">
+  <div class="marquee-track">
+    <span class="flex items-center whitespace-nowrap">
+      <span class="flex items-center gap-3 px-8 font-body italic uppercase tracking-[0.2em] text-sm sm:text-base text-cu-ink/70">
+        <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2" /><path stroke-linecap="round" d="M3 9h18" /><circle cx="6.5" cy="6.5" r="0.6" fill="currentColor" stroke="none" /><circle cx="9" cy="6.5" r="0.6" fill="currentColor" stroke="none" /></svg>
+        Web Design
+      </span>
+      <span class="w-2 h-2 border border-cu-ink/25 rotate-45"></span>
+      <span class="flex items-center gap-3 px-8 font-body italic uppercase tracking-[0.2em] text-sm sm:text-base text-cu-ink/70">
+        <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l5.5 14 2.2-5.8L18.5 9 5 3z" /></svg>
+        UI / UX
+      </span>
+      <span class="w-2 h-2 border border-cu-ink/25 rotate-45"></span>
+      <span class="flex items-center gap-3 px-8 font-body italic uppercase tracking-[0.2em] text-sm sm:text-base text-cu-ink/70">
+        <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 6l-2 12" /></svg>
+        Web Development
+      </span>
+      <span class="w-2 h-2 border border-cu-ink/25 rotate-45"></span>
+      <span class="flex items-center gap-3 px-8 font-body italic uppercase tracking-[0.2em] text-sm sm:text-base text-cu-ink/70">
+        <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l2.4 12.4a2 2 0 002 1.97h7.2a2 2 0 002-1.96L18 8H6" /><circle cx="9" cy="20" r="1" /><circle cx="17" cy="20" r="1" /></svg>
+        E-Commerce
+      </span>
+      <span class="w-2 h-2 border border-cu-ink/25 rotate-45"></span>
+    </span>
+    <span class="flex items-center whitespace-nowrap" aria-hidden="true">
+      <span class="flex items-center gap-3 px-8 font-body italic uppercase tracking-[0.2em] text-sm sm:text-base text-cu-ink/70">
+        <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2" /><path stroke-linecap="round" d="M3 9h18" /><circle cx="6.5" cy="6.5" r="0.6" fill="currentColor" stroke="none" /><circle cx="9" cy="6.5" r="0.6" fill="currentColor" stroke="none" /></svg>
+        Web Design
+      </span>
+      <span class="w-2 h-2 border border-cu-ink/25 rotate-45"></span>
+      <span class="flex items-center gap-3 px-8 font-body italic uppercase tracking-[0.2em] text-sm sm:text-base text-cu-ink/70">
+        <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l5.5 14 2.2-5.8L18.5 9 5 3z" /></svg>
+        UI / UX
+      </span>
+      <span class="w-2 h-2 border border-cu-ink/25 rotate-45"></span>
+      <span class="flex items-center gap-3 px-8 font-body italic uppercase tracking-[0.2em] text-sm sm:text-base text-cu-ink/70">
+        <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 6l-2 12" /></svg>
+        Web Development
+      </span>
+      <span class="w-2 h-2 border border-cu-ink/25 rotate-45"></span>
+      <span class="flex items-center gap-3 px-8 font-body italic uppercase tracking-[0.2em] text-sm sm:text-base text-cu-ink/70">
+        <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l2.4 12.4a2 2 0 002 1.97h7.2a2 2 0 002-1.96L18 8H6" /><circle cx="9" cy="20" r="1" /><circle cx="17" cy="20" r="1" /></svg>
+        E-Commerce
+      </span>
+      <span class="w-2 h-2 border border-cu-ink/25 rotate-45"></span>
+    </span>
+  </div>
+</section>
+
+<!-- ============ ORANGE STATEMENT BLOCK ============ -->
+<section class="relative bg-cu-orange grain overflow-hidden py-24 sm:py-36">
+  <div class="relative z-10 max-w-5xl mx-auto px-6 lg:px-10 text-center reveal">
+    <p class="font-body text-xs uppercase tracking-label text-cu-ink/50 mb-6">The Catch Up Philosophy</p>
+    <h2 class="font-display uppercase text-cu-ink text-4xl sm:text-6xl lg:text-7xl leading-[1.1] tracking-tightest2">
+      No templates. No filler. Just fast, beautiful websites that work.
+    </h2>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="relative bg-cu-ink grain overflow-hidden py-24 sm:py-32">
+  <div class="stars-wrap">
+    <div class="star-layer star-sm"></div>
+    <div class="star-layer star-md"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl reveal">
+      <p class="font-body text-xs uppercase tracking-label text-cu-orange mb-5">What We Do</p>
+      <h2 class="font-display uppercase text-white text-4xl sm:text-5xl leading-[1.05] tracking-tightest2">
+        Websites built<br /> to perform.
+      </h2>
+      <p class="font-body text-lg leading-relaxed text-white/60 mt-6">
+        Four ways we get your brand online — designed, built and launched without the agency runaround.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-6 mt-14 sm:mt-16">
+      <div class="reveal border border-white/10 rounded-2xl p-8 sm:p-10 bg-cu-charcoal">
+        <span class="font-display text-3xl sm:text-4xl num-outline-light">01</span>
+        <h3 class="font-display uppercase text-2xl sm:text-3xl text-white mt-5 tracking-tight">Website Design</h3>
+        <p class="font-body text-base leading-relaxed text-white/60 mt-4">
+          Custom UI/UX design tailored to your brand — wireframes, visual design and prototypes that look as good as they work.
+        </p>
+      </div>
+      <div class="reveal border border-white/10 rounded-2xl p-8 sm:p-10 bg-cu-charcoal" style="transition-delay:0.06s">
+        <span class="font-display text-3xl sm:text-4xl num-outline-light">02</span>
+        <h3 class="font-display uppercase text-2xl sm:text-3xl text-white mt-5 tracking-tight">Web Development</h3>
+        <p class="font-body text-base leading-relaxed text-white/60 mt-4">
+          Fast, responsive, SEO-ready builds — from no-code platforms to fully custom code, built to scale with you.
+        </p>
+      </div>
+      <div class="reveal border border-white/10 rounded-2xl p-8 sm:p-10 bg-cu-charcoal" style="transition-delay:0.12s">
+        <span class="font-display text-3xl sm:text-4xl num-outline-light">03</span>
+        <h3 class="font-display uppercase text-2xl sm:text-3xl text-white mt-5 tracking-tight">E-Commerce</h3>
+        <p class="font-body text-base leading-relaxed text-white/60 mt-4">
+          Online stores that are easy to manage and built to convert — from product pages to checkout.
+        </p>
+      </div>
+      <div class="reveal border border-white/10 rounded-2xl p-8 sm:p-10 bg-cu-charcoal" style="transition-delay:0.18s">
+        <span class="font-display text-3xl sm:text-4xl num-outline-light">04</span>
+        <h3 class="font-display uppercase text-2xl sm:text-3xl text-white mt-5 tracking-tight">Branding &amp; UI Systems</h3>
+        <p class="font-body text-base leading-relaxed text-white/60 mt-4">
+          Logos, colour systems and design components that keep your brand consistent everywhere it shows up.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SELECTED WORK ============ -->
+<section id="work" class="relative bg-cu-ink grain overflow-hidden py-24 sm:py-32">
+  <div class="absolute inset-0 flex items-start justify-center overflow-hidden pointer-events-none select-none pt-6 sm:pt-10" aria-hidden="true">
+    <span class="font-display text-[26vw] sm:text-[15vw] leading-none text-white/[0.03] whitespace-nowrap tracking-tightest2">WORK</span>
+  </div>
+  <div class="glow w-[420px] h-[420px] bg-cu-orange/15 top-1/3 -left-40"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+
+    <p class="font-body text-xs uppercase tracking-label text-cu-orange mb-6 reveal">Selected Work</p>
+    <h2 class="font-body italic font-medium text-4xl sm:text-6xl lg:text-7xl leading-[1.1] reveal" style="transition-delay:0.06s">
+      <span class="text-white">Websites that</span><br />
+      <span class="text-cu-orange">made an impact.</span>
+    </h2>
+
+    <div class="grid sm:grid-cols-2 gap-6 mt-12 sm:mt-16">
+
+      <div class="reveal rounded-2xl p-8 sm:p-10 flex flex-col justify-between min-h-[420px] relative overflow-hidden" style="transition-delay:0.1s; background: linear-gradient(135deg, #E8570A 0%, #5C1A0A 100%);">
+        <span class="ghost-label text-7xl sm:text-8xl">Aurora</span>
+        <div class="relative z-10">
+          <div class="flex items-center justify-between gap-4">
+            <span class="font-body text-xs uppercase tracking-label text-white/60">01</span>
+            <span class="font-body text-[11px] uppercase tracking-label text-white bg-white/15 rounded-full px-3.5 py-1.5">E-Commerce · Shopify</span>
+          </div>
+          <p class="font-display text-6xl sm:text-7xl text-white mt-12">+180%</p>
+          <p class="font-body text-xs uppercase tracking-label text-white/70 mt-2">Online Revenue</p>
+          <h3 class="font-display uppercase text-xl sm:text-2xl text-white mt-6 tracking-tight">Aurora Skincare</h3>
+          <p class="font-body text-sm sm:text-base leading-relaxed text-white/85 mt-2 max-w-[26ch]">A full storefront rebuild with a streamlined checkout took this skincare brand from a side hustle to a full-time business.</p>
+        </div>
+        <a href="#contact" class="link-arrow relative z-10 text-white mt-8">View Project
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+      </div>
+
+      <div class="reveal rounded-2xl p-8 sm:p-10 flex flex-col justify-between min-h-[420px] relative overflow-hidden" style="transition-delay:0.16s; background: linear-gradient(135deg, #F5A623 0%, #E8570A 100%);">
+        <span class="ghost-label text-7xl sm:text-8xl">Vantage</span>
+        <div class="relative z-10">
+          <div class="flex items-center justify-between gap-4">
+            <span class="font-body text-xs uppercase tracking-label text-white/60">02</span>
+            <span class="font-body text-[11px] uppercase tracking-label text-white bg-white/15 rounded-full px-3.5 py-1.5">Web Design · Corporate</span>
+          </div>
+          <p class="font-display text-6xl sm:text-7xl text-white mt-12">2.4x</p>
+          <p class="font-body text-xs uppercase tracking-label text-white/70 mt-2">Lead Form Submissions</p>
+          <h3 class="font-display uppercase text-xl sm:text-2xl text-white mt-6 tracking-tight">Vantage Legal</h3>
+          <p class="font-body text-sm sm:text-base leading-relaxed text-white/85 mt-2 max-w-[26ch]">A clean, credibility-first redesign turned a dated site into the firm's top source of new client enquiries.</p>
+        </div>
+        <a href="#contact" class="link-arrow relative z-10 text-white mt-8">View Project
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+      </div>
+
+      <div class="reveal rounded-2xl p-8 sm:p-10 flex flex-col justify-between min-h-[420px] relative overflow-hidden border border-white/10" style="transition-delay:0.22s; background: linear-gradient(135deg, #1A1A1A 0%, #E8570A 130%);">
+        <span class="ghost-label text-7xl sm:text-8xl">Marlowe</span>
+        <div class="relative z-10">
+          <div class="flex items-center justify-between gap-4">
+            <span class="font-body text-xs uppercase tracking-label text-white/50">03</span>
+            <span class="font-body text-[11px] uppercase tracking-label text-white bg-white/10 rounded-full px-3.5 py-1.5">Branding · Web Design</span>
+          </div>
+          <p class="font-display text-6xl sm:text-7xl text-white mt-12">98</p>
+          <p class="font-body text-xs uppercase tracking-label text-white/60 mt-2">Lighthouse Score</p>
+          <h3 class="font-display uppercase text-xl sm:text-2xl text-white mt-6 tracking-tight">Marlowe &amp; Finch</h3>
+          <p class="font-body text-sm sm:text-base leading-relaxed text-white/80 mt-2 max-w-[26ch]">A full brand refresh paired with a lightning-fast new site, built mobile-first and optimised down to the last kilobyte.</p>
+        </div>
+        <a href="#contact" class="link-arrow relative z-10 text-white mt-8">View Project
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+      </div>
+
+      <div class="reveal rounded-2xl p-8 sm:p-10 flex flex-col justify-between min-h-[420px] relative overflow-hidden" style="transition-delay:0.28s; background: linear-gradient(135deg, #E8570A 0%, #3D1B0A 100%);">
+        <span class="ghost-label text-7xl sm:text-8xl">Pulse</span>
+        <div class="relative z-10">
+          <div class="flex items-center justify-between gap-4">
+            <span class="font-body text-xs uppercase tracking-label text-white/60">04</span>
+            <span class="font-body text-[11px] uppercase tracking-label text-white bg-white/15 rounded-full px-3.5 py-1.5">Web Design · Portfolio</span>
+          </div>
+          <p class="font-display text-6xl sm:text-7xl text-white mt-12">-52%</p>
+          <p class="font-body text-xs uppercase tracking-label text-white/70 mt-2">Bounce Rate</p>
+          <h3 class="font-display uppercase text-xl sm:text-2xl text-white mt-6 tracking-tight">Pulse Studio</h3>
+          <p class="font-body text-sm sm:text-base leading-relaxed text-white/85 mt-2 max-w-[26ch]">A bold, animation-led portfolio site helped this creative studio land bigger clients within weeks of launch.</p>
+        </div>
+        <a href="#contact" class="link-arrow relative z-10 text-white mt-8">View Project
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY CATCH UP ============ -->
+<section id="why" class="relative bg-cu-ink grain overflow-hidden py-24 sm:py-32">
+  <div class="stars-wrap">
+    <div class="star-layer star-sm"></div>
+    <div class="star-layer star-md"></div>
+    <div class="star-layer star-lg"></div>
+  </div>
+  <div class="glow w-[460px] h-[460px] bg-cu-orange/12 bottom-0 right-0"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl reveal mb-12 sm:mb-16">
+      <p class="font-body text-xs uppercase tracking-label text-cu-orange mb-5">Why Catch Up</p>
+      <h2 class="font-display uppercase text-4xl sm:text-5xl leading-[1.05] tracking-tightest2 text-white">
+        Designed to perform.<br /> Built to last.
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-5 sm:gap-6">
+
+      <div class="reveal lift bg-cu-charcoal border border-white/10 rounded-2xl p-7 sm:p-9">
+        <div class="flex items-center gap-4 sm:gap-5 mb-6">
+          <span class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cu-orange/15 border border-cu-orange/30 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m5-4a4 4 0 100-8 4 4 0 000 8zm6 4a4 4 0 00-8 0" /></svg>
+          </span>
+          <span class="font-display text-3xl sm:text-4xl text-cu-orange">DIRECT</span>
+        </div>
+        <h3 class="font-display uppercase text-xl text-white mb-2 tracking-tight">No Account Managers</h3>
+        <p class="font-body text-sm sm:text-base leading-relaxed text-white/60">You work directly with the designer and developer building your site — every time, no relays.</p>
+      </div>
+
+      <div class="reveal lift bg-cu-charcoal border border-white/10 rounded-2xl p-7 sm:p-9" style="transition-delay:0.06s">
+        <div class="flex items-center gap-4 sm:gap-5 mb-6">
+          <span class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cu-orange/15 border border-cu-orange/30 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l2.5 2.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </span>
+          <span class="font-display text-3xl sm:text-4xl text-cu-orange">14 DAYS</span>
+        </div>
+        <h3 class="font-display uppercase text-xl text-white mb-2 tracking-tight">Launch-Ready, Fast</h3>
+        <p class="font-body text-sm sm:text-base leading-relaxed text-white/60">From kickoff to launch in as little as two weeks — without cutting corners on quality.</p>
+      </div>
+
+      <div class="reveal lift bg-cu-charcoal border border-white/10 rounded-2xl p-7 sm:p-9" style="transition-delay:0.12s">
+        <div class="flex items-center gap-4 sm:gap-5 mb-6">
+          <span class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cu-orange/15 border border-cu-orange/30 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="14" height="10" rx="1" /><rect x="17" y="9" width="5" height="9" rx="1" /></svg>
+          </span>
+          <span class="font-display text-3xl sm:text-4xl text-cu-orange">100%</span>
+        </div>
+        <h3 class="font-display uppercase text-xl text-white mb-2 tracking-tight">Mobile-First Builds</h3>
+        <p class="font-body text-sm sm:text-base leading-relaxed text-white/60">Every site is designed mobile-first and tested across devices before it ever goes live.</p>
+      </div>
+
+      <div class="reveal lift bg-cu-charcoal border border-white/10 rounded-2xl p-7 sm:p-9" style="transition-delay:0.18s">
+        <div class="flex items-center gap-4 sm:gap-5 mb-6">
+          <span class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cu-orange/15 border border-cu-orange/30 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+          </span>
+          <span class="font-display text-3xl sm:text-4xl text-cu-orange">ZERO</span>
+        </div>
+        <h3 class="font-display uppercase text-xl text-white mb-2 tracking-tight">Lock-In Contracts</h3>
+        <p class="font-body text-sm sm:text-base leading-relaxed text-white/60">No retainers, no 12-month contracts — just a website that's built to last.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / CTA ============ -->
+<section id="contact" class="relative bg-cu-orange overflow-hidden py-24 sm:py-32">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;); mix-blend-mode:overlay;"></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 text-center reveal">
+    <p class="font-body italic font-medium text-2xl sm:text-4xl text-white/70 mb-1 sm:mb-2">It all starts with</p>
+    <h2 class="font-display uppercase text-white text-4xl sm:text-6xl lg:text-7xl leading-[1.1] tracking-tightest2">
+      A Conversation.
+    </h2>
+    <p class="font-body text-white/80 mt-6 text-lg tracking-wide">catchup.com.au</p>
+    <a href="mailto:hello@catchup.com.au" class="btn btn-outline-light mt-10">Let's Catch Up</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-cu-ink grain pt-20 pb-10">
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div class="grid lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
+      <div class="lg:col-span-5">
+        <a href="#top" class="font-display text-2xl text-white uppercase">Catch&nbsp;Up</a>
+        <p class="font-body text-white/50 mt-4 max-w-xs leading-relaxed">It all starts with a conversation.</p>
+
+        <div class="flex items-center gap-4 mt-8">
+          <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-cu-orange hover:border-cu-orange transition-colors duration-300">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.62.07 4.81s-.01 3.56-.07 4.81c-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-3.27-.15-4.77-1.7-4.92-4.92-.06-1.25-.07-1.62-.07-4.81s.01-3.56.07-4.81C2.38 3.96 3.9 2.42 7.15 2.27 8.4 2.21 8.8 2.2 12 2.2zm0 1.8c-3.14 0-3.51.01-4.74.07-2.27.1-3.39 1.24-3.49 3.49-.06 1.23-.07 1.6-.07 4.74s.01 3.51.07 4.74c.1 2.25 1.22 3.39 3.49 3.49 1.23.06 1.6.07 4.74.07s3.51-.01 4.74-.07c2.26-.1 3.39-1.23 3.49-3.49.06-1.23.07-1.6.07-4.74s-.01-3.51-.07-4.74c-.1-2.25-1.23-3.39-3.49-3.49-1.23-.06-1.6-.07-4.74-.07zm0 3.06a4.94 4.94 0 110 9.88 4.94 4.94 0 010-9.88zm0 1.8a3.14 3.14 0 100 6.28 3.14 3.14 0 000-6.28zm5.13-1.99a1.15 1.15 0 110 2.3 1.15 1.15 0 010-2.3z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-cu-orange hover:border-cu-orange transition-colors duration-300">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.94 6 2.5 6S0 4.88 0 3.5 1.04 1 2.48 1s2.5 1.12 2.5 2.5zM.22 8.24h4.56V23H.22V8.24zM8.34 8.24h4.37v2.01h.06c.61-1.16 2.1-2.38 4.32-2.38 4.62 0 5.47 3.04 5.47 7v8.13h-4.56v-7.21c0-1.72-.03-3.93-2.4-3.93-2.4 0-2.77 1.87-2.77 3.8v7.34H8.34V8.24z"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-cu-orange hover:border-cu-orange transition-colors duration-300">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99C18.34 21.13 22 16.99 22 12z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3 lg:col-start-7">
+        <p class="font-body text-[11px] uppercase tracking-label text-cu-orange mb-5">Services</p>
+        <ul class="space-y-3 font-body text-white/70">
+          <li><a href="#services" class="hover:text-white transition-colors duration-300">Website Design</a></li>
+          <li><a href="#services" class="hover:text-white transition-colors duration-300">Web Development</a></li>
+          <li><a href="#services" class="hover:text-white transition-colors duration-300">E-Commerce</a></li>
+          <li><a href="#services" class="hover:text-white transition-colors duration-300">Branding &amp; UI</a></li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-3">
+        <p class="font-body text-[11px] uppercase tracking-label text-cu-orange mb-5">Studio</p>
+        <ul class="space-y-3 font-body text-white/70">
+          <li><a href="#top" class="hover:text-white transition-colors duration-300">Home</a></li>
+          <li><a href="#work" class="hover:text-white transition-colors duration-300">Work</a></li>
+          <li><a href="#why" class="hover:text-white transition-colors duration-300">Why Us</a></li>
+          <li><a href="#contact" class="hover:text-white transition-colors duration-300">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
+      <p class="font-body text-xs text-white/40">© 2026 Catch Up. All rights reserved.</p>
+      <p class="font-body text-xs text-white/40 uppercase tracking-label">catchup.com.au</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating chat pill -->
+<a href="#contact" class="chat-pill" aria-label="Let's chat — jump to contact">
+  <span class="relative flex w-9 h-9 rounded-full bg-cu-ink items-center justify-center font-display text-white text-sm flex-shrink-0">
+    C
+    <span class="pulse-dot absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-cu-ink ring-2 ring-cu-orange"></span>
+  </span>
+  <span class="font-body text-sm font-bold uppercase tracking-[0.15em] text-cu-ink pr-1">Chat</span>
+</a>
+
+<script>
+  // Sticky nav background on scroll
+  const nav = document.getElementById('site-nav');
+  const onScroll = () => {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Full-screen menu
+  const menuToggle = document.getElementById('menu-toggle');
+  const fullMenu = document.getElementById('full-menu');
+  const iconBurger = document.getElementById('icon-burger');
+  const iconClose = document.getElementById('icon-close');
+
+  const closeMenu = () => {
+    fullMenu.classList.remove('open');
+    iconBurger.classList.remove('hidden');
+    iconClose.classList.add('hidden');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('overflow-hidden');
+  };
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = fullMenu.classList.toggle('open');
+    iconBurger.classList.toggle('hidden', isOpen);
+    iconClose.classList.toggle('hidden', !isOpen);
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('overflow-hidden', isOpen);
+  });
+
+  document.querySelectorAll('.full-menu-link').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach((el) => io.observe(el));
+
+  // Hero word cycle
+  const cycleWords = ['websites', 'stores', 'products', 'platforms'];
+  const wordWrap = document.getElementById('cycle-word');
+  const wordLayers = wordWrap.querySelectorAll('.word-layer');
+  const HOLD_MS = 1800;
+  const TRANSITION_MS = 1500;
+  const PERIOD_MS = HOLD_MS + TRANSITION_MS;
+  const SLIDE_PX = parseFloat(getComputedStyle(wordWrap).fontSize) * 0.22;
+  const easeOutCubic = (p) => 1 - Math.pow(1 - p, 3);
+
+  let activeLayer = 0;
+  let cycleIndex = 0;
+  wordLayers[1].textContent = cycleWords[(cycleIndex + 1) % cycleWords.length];
+
+  let cycleStart = performance.now();
+  // If a loading screen covers the page, restart the cycle clock the
+  // moment it's revealed so the word is always seen mid-hold, never
+  // mid-transition.
+  window.addEventListener('cu:loader-done', () => {
+    cycleStart = performance.now();
+  }, { once: true });
+  const renderWordCycle = (now) => {
+    let elapsed = now - cycleStart;
+    if (elapsed >= PERIOD_MS) {
+      cycleStart += PERIOD_MS;
+      elapsed -= PERIOD_MS;
+      activeLayer = 1 - activeLayer;
+      cycleIndex = (cycleIndex + 1) % cycleWords.length;
+      wordLayers[1 - activeLayer].textContent = cycleWords[(cycleIndex + 1) % cycleWords.length];
+    }
+
+    const outEl = wordLayers[activeLayer];
+    const inEl = wordLayers[1 - activeLayer];
+
+    if (elapsed < HOLD_MS) {
+      outEl.style.opacity = '1';
+      outEl.style.transform = 'translateY(0)';
+      inEl.style.opacity = '0';
+      inEl.style.transform = `translateY(${SLIDE_PX}px)`;
+    } else {
+      const e = easeOutCubic(Math.min(1, (elapsed - HOLD_MS) / TRANSITION_MS));
+      outEl.style.opacity = String(1 - e);
+      outEl.style.transform = `translateY(${-SLIDE_PX * e}px)`;
+      inEl.style.opacity = String(e);
+      inEl.style.transform = `translateY(${SLIDE_PX * (1 - e)}px)`;
+    }
+
+    requestAnimationFrame(renderWordCycle);
+  };
+  requestAnimationFrame(renderWordCycle);
+</script>
+
+</body>
+</html>
