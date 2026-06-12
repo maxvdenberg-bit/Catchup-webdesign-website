@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#111111" />
+<title>E-Commerce — Catch Up</title>
+<meta name="description" content="Online stores designed and built by Catch Up — easy to manage and built to convert." />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111111'/%3E%3Ctext x='16' y='23' font-family='Arial, Helvetica, sans-serif' font-weight='900' font-size='19' fill='%23E8570A' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../js/tailwind-config.js"></script>
+<link rel="stylesheet" href="../css/shared.css" />
+</head>
+
+<body class="bg-white text-cu-ink overflow-x-hidden">
+
+<!-- Skip link -->
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-cu-orange focus:text-white focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
+
+<!-- ============ NAV ============ -->
+<header id="site-nav" class="fixed top-0 inset-x-0 z-50 border-b border-transparent">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
+    <a href="../index.html" class="font-display text-xl sm:text-2xl tracking-tight text-white uppercase">Catch&nbsp;Up</a>
+
+    <button id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="full-menu" class="text-white p-2 -mr-2">
+      <svg id="icon-burger" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Full-screen menu -->
+<div id="full-menu" class="full-menu fixed inset-0 z-40 bg-cu-ink grain flex flex-col items-center justify-center gap-7 sm:gap-8">
+  <a href="../index.html" class="full-menu-link font-display text-4xl sm:text-5xl text-white uppercase tracking-tight">Home</a>
+  <a href="index.html" class="full-menu-link font-display text-4xl sm:text-5xl text-cu-orange uppercase tracking-tight">Services</a>
+  <a href="../work.html" class="full-menu-link font-display text-4xl sm:text-5xl text-white uppercase tracking-tight">Work</a>
+  <a href="../why-us.html" class="full-menu-link font-display text-4xl sm:text-5xl text-white uppercase tracking-tight">Why Us</a>
+  <a href="../contact.html" class="full-menu-link font-display text-4xl sm:text-5xl text-white uppercase tracking-tight">Contact</a>
+  <a href="../contact.html" class="full-menu-link btn btn-filled mt-4">Let's Catch Up</a>
+</div>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="relative bg-cu-ink grain overflow-hidden pt-32 pb-16 sm:pt-40 sm:pb-20">
+  <div class="stars-wrap">
+    <div class="star-layer star-sm"></div>
+    <div class="star-layer star-md"></div>
+  </div>
+  <div class="glow w-[420px] h-[420px] bg-cu-orange/15 -top-32 -right-32"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl reveal">
+      <p class="font-body text-[11px] sm:text-xs uppercase tracking-label text-cu-orange mb-5 flex items-center gap-3">
+        <span class="w-8 h-px bg-cu-orange/60 flex-shrink-0"></span>
+        Service 03
+      </p>
+      <h1 class="font-display uppercase text-white text-4xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tightest2">
+        E-Commerce
+      </h1>
+      <p class="font-body text-white/60 text-base sm:text-lg leading-relaxed mt-6 max-w-lg">
+        Online stores that are easy to manage and built to convert — from product pages to checkout. This page is a draft, full details coming soon.
+      </p>
+      <div class="mt-9">
+        <a href="../contact.html" class="btn btn-filled">Start the Conversation
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT'S INCLUDED ============ -->
+<section class="relative bg-cu-grey overflow-hidden border-y border-cu-ink/5 py-20 sm:py-28">
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl reveal mb-12 sm:mb-16">
+      <p class="font-body text-xs uppercase tracking-label text-cu-orange/70 mb-5">What's Included</p>
+      <h2 class="font-display uppercase text-3xl sm:text-4xl leading-[1.05] tracking-tightest2 text-cu-ink">
+        Here's what to expect.
+      </h2>
+      <p class="font-body text-cu-ink/60 mt-5 leading-relaxed">A draft outline of how an e-commerce build typically runs — exact deliverables are tailored to each project.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-6">
+      <div class="reveal lift bg-white border border-cu-ink/10 rounded-2xl p-7 sm:p-8">
+        <span class="w-12 h-12 rounded-full bg-cu-orange/10 border border-cu-orange/30 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+        </span>
+        <h3 class="font-display uppercase text-lg text-cu-ink mb-2 tracking-tight">Product Catalogue</h3>
+        <p class="font-body text-sm sm:text-base leading-relaxed text-cu-ink/60">Organised collections and product pages that make browsing effortless.</p>
+      </div>
+
+      <div class="reveal lift bg-white border border-cu-ink/10 rounded-2xl p-7 sm:p-8" style="transition-delay:0.06s">
+        <span class="w-12 h-12 rounded-full bg-cu-orange/10 border border-cu-orange/30 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+        </span>
+        <h3 class="font-display uppercase text-lg text-cu-ink mb-2 tracking-tight">Streamlined Checkout</h3>
+        <p class="font-body text-sm sm:text-base leading-relaxed text-cu-ink/60">A fast, friction-free checkout flow designed to reduce drop-off.</p>
+      </div>
+
+      <div class="reveal lift bg-white border border-cu-ink/10 rounded-2xl p-7 sm:p-8" style="transition-delay:0.12s">
+        <span class="w-12 h-12 rounded-full bg-cu-orange/10 border border-cu-orange/30 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+        </span>
+        <h3 class="font-display uppercase text-lg text-cu-ink mb-2 tracking-tight">Payments &amp; Shipping</h3>
+        <p class="font-body text-sm sm:text-base leading-relaxed text-cu-ink/60">Integrated payment gateways and shipping options that fit how you sell.</p>
+      </div>
+
+      <div class="reveal lift bg-white border border-cu-ink/10 rounded-2xl p-7 sm:p-8" style="transition-delay:0.18s">
+        <span class="w-12 h-12 rounded-full bg-cu-orange/10 border border-cu-orange/30 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-cu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+        </span>
+        <h3 class="font-display uppercase text-lg text-cu-ink mb-2 tracking-tight">Inventory-Friendly CMS</h3>
+        <p class="font-body text-sm sm:text-base leading-relaxed text-cu-ink/60">An admin setup that makes adding, editing and managing stock simple.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATEMENT + CTA ============ -->
+<section class="relative bg-cu-orange grain overflow-hidden py-20 sm:py-28">
+  <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 text-center reveal">
+    <p class="font-body text-xs uppercase tracking-label text-cu-ink/50 mb-6">The Catch Up Philosophy</p>
+    <h2 class="font-display uppercase text-cu-ink text-3xl sm:text-5xl lg:text-6xl leading-[1.1] tracking-tightest2">
+      Every extra step is a chance to lose a sale.
+    </h2>
+    <a href="../contact.html" class="btn btn-outline mt-10" style="border-color:#111111; color:#111111;">Start the Conversation</a>
+  </div>
+</section>
+
+<!-- ============ EXPLORE OTHER SERVICES ============ -->
+<section class="relative bg-cu-ink grain overflow-hidden py-20 sm:py-28">
+  <div class="stars-wrap">
+    <div class="star-layer star-sm"></div>
+  </div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl reveal mb-10 sm:mb-12">
+      <p class="font-body text-xs uppercase tracking-label text-cu-orange mb-5">Explore More</p>
+      <h2 class="font-display uppercase text-3xl sm:text-4xl leading-[1.05] tracking-tightest2 text-white">
+        Other services.
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-5">
+      <a href="website-design.html" class="reveal lift block border border-white/10 rounded-2xl p-7 bg-cu-charcoal">
+        <span class="font-display text-2xl num-outline-light">01</span>
+        <h3 class="font-display uppercase text-lg text-white mt-3 mb-4 tracking-tight">Website Design</h3>
+        <span class="link-arrow text-cu-orange">View Service
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </span>
+      </a>
+      <a href="web-development.html" class="reveal lift block border border-white/10 rounded-2xl p-7 bg-cu-charcoal" style="transition-delay:0.06s">
+        <span class="font-display text-2xl num-outline-light">02</span>
+        <h3 class="font-display uppercase text-lg text-white mt-3 mb-4 tracking-tight">Web Development</h3>
+        <span class="link-arrow text-cu-orange">View Service
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </span>
+      </a>
+      <a href="branding-ui.html" class="reveal lift block border border-white/10 rounded-2xl p-7 bg-cu-charcoal" style="transition-delay:0.12s">
+        <span class="font-display text-2xl num-outline-light">04</span>
+        <h3 class="font-display uppercase text-lg text-white mt-3 mb-4 tracking-tight">Branding &amp; UI Systems</h3>
+        <span class="link-arrow text-cu-orange">View Service
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-cu-ink grain pt-20 pb-10">
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div class="grid lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
+      <div class="lg:col-span-5">
+        <a href="../index.html" class="font-display text-2xl text-white uppercase">Catch&nbsp;Up</a>
+        <p class="font-body text-white/50 mt-4 max-w-xs leading-relaxed">It all starts with a conversation.</p>
+
+        <div class="flex items-center gap-4 mt-8">
+          <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-cu-orange hover:border-cu-orange transition-colors duration-300">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.62.07 4.81s-.01 3.56-.07 4.81c-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-3.27-.15-4.77-1.7-4.92-4.92-.06-1.25-.07-1.62-.07-4.81s.01-3.56.07-4.81C2.38 3.96 3.9 2.42 7.15 2.27 8.4 2.21 8.8 2.2 12 2.2zm0 1.8c-3.14 0-3.51.01-4.74.07-2.27.1-3.39 1.24-3.49 3.49-.06 1.23-.07 1.6-.07 4.74s.01 3.51.07 4.74c.1 2.25 1.22 3.39 3.49 3.49 1.23.06 1.6.07 4.74.07s3.51-.01 4.74-.07c2.26-.1 3.39-1.23 3.49-3.49.06-1.23.07-1.6.07-4.74s-.01-3.51-.07-4.74c-.1-2.25-1.23-3.39-3.49-3.49-1.23-.06-1.6-.07-4.74-.07zm0 3.06a4.94 4.94 0 110 9.88 4.94 4.94 0 010-9.88zm0 1.8a3.14 3.14 0 100 6.28 3.14 3.14 0 000-6.28zm5.13-1.99a1.15 1.15 0 110 2.3 1.15 1.15 0 010-2.3z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-cu-orange hover:border-cu-orange transition-colors duration-300">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.94 6 2.5 6S0 4.88 0 3.5 1.04 1 2.48 1s2.5 1.12 2.5 2.5zM.22 8.24h4.56V23H.22V8.24zM8.34 8.24h4.37v2.01h.06c.61-1.16 2.1-2.38 4.32-2.38 4.62 0 5.47 3.04 5.47 7v8.13h-4.56v-7.21c0-1.72-.03-3.93-2.4-3.93-2.4 0-2.77 1.87-2.77 3.8v7.34H8.34V8.24z"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-cu-orange hover:border-cu-orange transition-colors duration-300">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99C18.34 21.13 22 16.99 22 12z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3 lg:col-start-7">
+        <p class="font-body text-[11px] uppercase tracking-label text-cu-orange mb-5">Services</p>
+        <ul class="space-y-3 font-body text-white/70">
+          <li><a href="website-design.html" class="hover:text-white transition-colors duration-300">Website Design</a></li>
+          <li><a href="web-development.html" class="hover:text-white transition-colors duration-300">Web Development</a></li>
+          <li><a href="ecommerce.html" class="hover:text-white transition-colors duration-300">E-Commerce</a></li>
+          <li><a href="branding-ui.html" class="hover:text-white transition-colors duration-300">Branding &amp; UI</a></li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-3">
+        <p class="font-body text-[11px] uppercase tracking-label text-cu-orange mb-5">Studio</p>
+        <ul class="space-y-3 font-body text-white/70">
+          <li><a href="../index.html" class="hover:text-white transition-colors duration-300">Home</a></li>
+          <li><a href="../work.html" class="hover:text-white transition-colors duration-300">Work</a></li>
+          <li><a href="../why-us.html" class="hover:text-white transition-colors duration-300">Why Us</a></li>
+          <li><a href="../contact.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
+      <p class="font-body text-xs text-white/40">© 2026 Catch Up. All rights reserved.</p>
+      <p class="font-body text-xs text-white/40 uppercase tracking-label">catchup.com.au</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating chat pill -->
+<a href="../contact.html" class="chat-pill" aria-label="Let's chat — go to contact">
+  <span class="relative flex w-9 h-9 rounded-full bg-cu-ink items-center justify-center font-display text-white text-sm flex-shrink-0">
+    C
+    <span class="pulse-dot absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-cu-ink ring-2 ring-cu-orange"></span>
+  </span>
+  <span class="font-body text-sm font-bold uppercase tracking-[0.15em] text-cu-ink pr-1">Chat</span>
+</a>
+
+<script src="../js/shared.js"></script>
+</body>
+</html>
