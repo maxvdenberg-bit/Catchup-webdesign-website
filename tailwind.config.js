@@ -1,4 +1,6 @@
-tailwind.config = {
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./*.html', './services/*.html'],
   theme: {
     extend: {
       colors: {
