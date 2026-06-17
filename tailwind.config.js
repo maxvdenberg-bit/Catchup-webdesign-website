@@ -14,7 +14,7 @@ export default {
       },
       fontFamily: {
         display: ['"Archivo Black"', 'Arial Black', 'sans-serif'],
-        body: ['"Space Grotesk"', 'sans-serif'],
+        body: ['"Instrument Sans"', 'sans-serif'],
       },
       letterSpacing: {
         tightest2: '-0.04em',
