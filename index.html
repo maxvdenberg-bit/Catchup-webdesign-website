@@ -590,11 +590,12 @@
     const loadingScreen = document.getElementById('loading-screen');
     if (!loadingScreen) return;
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (sessionStorage.getItem('cu:visited') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       loadingScreen.remove();
       window.dispatchEvent(new Event('cu:loader-done'));
       return;
     }
+    sessionStorage.setItem('cu:visited', '1');
 
     document.body.classList.add('overflow-hidden');
 
