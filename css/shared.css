@@ -384,3 +384,55 @@ h1, h2, h3, .font-display { font-family: 'Archivo Black', 'Arial Black', sans-se
   pointer-events: none;
   white-space: nowrap;
 }
+
+/* Showcase carousel */
+.showcase-track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 0.25rem;
+}
+.showcase-track::-webkit-scrollbar { display: none; }
+.showcase-card {
+  scroll-snap-align: start;
+  flex: 0 0 82vw;
+  max-width: 82vw;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (min-width: 640px) {
+  .showcase-card { flex: 0 0 480px; max-width: 480px; }
+}
+.showcase-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px -20px rgba(0,0,0,0.5);
+}
+.showcase-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.showcase-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(to top, rgba(17,17,17,0.85), transparent);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.8);
+}

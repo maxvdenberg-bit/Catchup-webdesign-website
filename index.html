@@ -547,6 +547,7 @@
     #loading-screen { display: none !important; }
   }
 </style>
+<link rel="stylesheet" href="css/shared.css" />
 <link rel="stylesheet" href="css/tailwind.css" />
 </head>
 
@@ -711,20 +712,39 @@
   </div>
 </section>
 
-<!-- ============ YOUR NEXT WEBSITE (GLOW STATEMENT) ============ -->
-<section class="relative bg-cu-ink grain overflow-hidden py-28 sm:py-44">
+<!-- ============ WHAT WE BUILD (SHOWCASE CAROUSEL) ============ -->
+<section class="relative bg-cu-ink grain py-20 sm:py-28" style="overflow-y:hidden">
   <div class="stars-wrap">
     <div class="star-layer star-sm"></div>
   </div>
-  <div class="glow glow-pulse w-[640px] h-[640px] bg-cu-orange/30 top-1/2 left-1/2"></div>
 
-  <div class="relative z-10 max-w-4xl mx-auto px-6 text-center reveal">
-    <h2 class="font-display uppercase text-white text-5xl sm:text-7xl lg:text-8xl tracking-tightest2 leading-[1.05]">
-      Your next website
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <h2 class="font-body italic font-medium text-4xl sm:text-6xl lg:text-7xl leading-[1.1] text-white reveal mb-10 sm:mb-14">
+      What we build.
     </h2>
-    <p class="font-body italic font-medium text-outline text-4xl sm:text-6xl lg:text-7xl mt-3 sm:mt-4 tracking-tight">
-      starts with a conversation.
-    </p>
+
+    <div class="showcase-track reveal" style="transition-delay:0.1s">
+      <div class="showcase-card">
+        <img src="images/mockup-resort.png" alt="Holiday resort website design" loading="eager" />
+        <span class="showcase-label">Holiday Resort</span>
+      </div>
+      <div class="showcase-card">
+        <img src="images/mockup-electrician.png" alt="Electrician website design" loading="lazy" />
+        <span class="showcase-label">Electrical Services</span>
+      </div>
+      <div class="showcase-card">
+        <img src="images/mockup-restaurant.png" alt="Restaurant website design" loading="lazy" />
+        <span class="showcase-label">Restaurant</span>
+      </div>
+      <div class="showcase-card">
+        <img src="images/mockup-coffee.png" alt="Coffee shop website design" loading="lazy" />
+        <span class="showcase-label">Coffee Shop</span>
+      </div>
+      <div class="showcase-card">
+        <img src="images/mockup-realestate.png" alt="Real estate website design" loading="lazy" />
+        <span class="showcase-label">Real Estate</span>
+      </div>
+    </div>
   </div>
 </section>
 
