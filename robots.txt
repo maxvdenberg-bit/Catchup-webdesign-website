@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://catchupwebdesign.com.au/sitemap.xml
