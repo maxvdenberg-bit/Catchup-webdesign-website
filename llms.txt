@@ -1,0 +1,20 @@
+# Catch Up
+
+> Australian web design studio based in Port Douglas, serving Cairns and clients Australia-wide.
+
+## Services
+
+- [Website Design & Build](https://catchupwebdesign.com.au/services/website-design.html): Custom, fast-loading, SEO-ready websites designed around your brand, coded from scratch, live in as little as two weeks.
+- [Custom Code](https://catchupwebdesign.com.au/services/web-development.html): Booking systems, contact forms, payment integrations and anything else your business runs on.
+- [E-Commerce](https://catchupwebdesign.com.au/services/ecommerce.html): Custom online stores (coming soon).
+- [Pricing](https://catchupwebdesign.com.au/services/pricing.html): Fixed-price packages with transparent pricing agreed upfront.
+- [Contact](https://catchupwebdesign.com.au/contact.html): Get in touch for a free 2-page prototype.
+
+## Key Facts
+
+- Free 2-page prototype before commitment — see your site before you pay
+- Fixed pricing agreed upfront — the price you see is the price you pay
+- 14-day delivery for Starter builds
+- 1:1 direct communication with the designer/developer — no middlemen
+- No lock-in contracts — full code handover available, your site stays yours
+- Based in Port Douglas, QLD, serving Cairns, Far North Queensland, and clients Australia-wide
