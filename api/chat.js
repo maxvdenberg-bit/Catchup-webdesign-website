@@ -149,6 +149,10 @@ export default async function handler(req, res) {
   }
 }
 
+function esc(s) {
+  return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 async function submitLead(leadData) {
   const webhookUrl = process.env.WEBHOOK_URL;
   if (webhookUrl) {
@@ -173,20 +177,20 @@ async function submitLead(leadData) {
       body: JSON.stringify({
         from: 'Catch Up Leads <leads@catchupwebdesign.com.au>',
         to: notifyEmail,
-        subject: `${scoreEmoji} New ${leadData.score} lead — ${leadData.name}`,
+        subject: `${scoreEmoji} New ${esc(leadData.score)} lead — ${esc(leadData.name)}`,
         html: `
           <h2>New Lead from Website Chatbot</h2>
           <table style="border-collapse:collapse;width:100%;max-width:500px">
-            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Name</td><td style="padding:8px;border-bottom:1px solid #eee">${leadData.name}</td></tr>
-            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Email</td><td style="padding:8px;border-bottom:1px solid #eee"><a href="mailto:${leadData.email}">${leadData.email}</a></td></tr>
-            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Score</td><td style="padding:8px;border-bottom:1px solid #eee">${scoreEmoji} ${leadData.score.toUpperCase()}</td></tr>
-            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Project</td><td style="padding:8px;border-bottom:1px solid #eee">${leadData.projectType || 'Not specified'}</td></tr>
-            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Industry</td><td style="padding:8px;border-bottom:1px solid #eee">${leadData.industry || 'Not specified'}</td></tr>
-            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Budget</td><td style="padding:8px;border-bottom:1px solid #eee">${leadData.budget || 'Unknown'}</td></tr>
-            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Timeline</td><td style="padding:8px;border-bottom:1px solid #eee">${leadData.timeline || 'Unknown'}</td></tr>
-            <tr><td style="padding:8px;font-weight:bold">Summary</td><td style="padding:8px">${leadData.summary}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Name</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(leadData.name)}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Email</td><td style="padding:8px;border-bottom:1px solid #eee"><a href="mailto:${encodeURIComponent(leadData.email)}">${esc(leadData.email)}</a></td></tr>
+            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Score</td><td style="padding:8px;border-bottom:1px solid #eee">${scoreEmoji} ${esc(leadData.score).toUpperCase()}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Project</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(leadData.projectType || 'Not specified')}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Industry</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(leadData.industry || 'Not specified')}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Budget</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(leadData.budget || 'Unknown')}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;border-bottom:1px solid #eee">Timeline</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(leadData.timeline || 'Unknown')}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold">Summary</td><td style="padding:8px">${esc(leadData.summary)}</td></tr>
           </table>
-          <p style="margin-top:16px;color:#666;font-size:13px">Captured from: ${leadData.page || 'Unknown page'} at ${leadData.timestamp}</p>
+          <p style="margin-top:16px;color:#666;font-size:13px">Captured from: ${esc(leadData.page || 'Unknown page')} at ${esc(leadData.timestamp)}</p>
         `
       })
     });
