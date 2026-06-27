@@ -121,7 +121,7 @@
     const typing = document.createElement('div');
     typing.className = 'cu-msg cu-msg-bot cu-typing';
     typing.id = 'cu-typing';
-    typing.innerHTML = '<span></span><span></span><span></span>';
+    for (let i = 0; i < 3; i++) typing.appendChild(document.createElement('span'));
     messagesEl.appendChild(typing);
     scrollToBottom();
   }
@@ -186,54 +186,60 @@
 
       let currentBubble = null;
       let fullText = '';
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+      function processLine(line) {
+        if (!line.startsWith('data: ')) return;
+        const jsonStr = line.slice(6).trim();
+        if (!jsonStr) return;
+        try {
+          const data = JSON.parse(jsonStr);
 
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
+          if (data.type === 'text_start' || (data.type === 'text' && !currentBubble)) {
+            currentBubble = appendBotBubble('');
+            fullText = '';
+          }
 
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const jsonStr = line.slice(6).trim();
-          if (!jsonStr) continue;
+          if (data.type === 'text' && currentBubble) {
+            fullText += data.text;
+            renderBotText(currentBubble, fullText);
+            scrollToBottom();
+          }
 
-          try {
-            const data = JSON.parse(jsonStr);
+          if (data.type === 'lead_captured') {
+            showLeadSuccess();
+          }
 
-            if (data.type === 'text_start' || (data.type === 'text' && !currentBubble)) {
-              currentBubble = appendBotBubble('');
-              fullText = '';
+          if (data.type === 'done') {
+            if (fullText) {
+              messages.push({ role: 'assistant', content: fullText });
+              saveMessages();
             }
+          }
 
-            if (data.type === 'text' && currentBubble) {
-              fullText += data.text;
-              renderBotText(currentBubble, fullText);
-              scrollToBottom();
-            }
+          if (data.type === 'error') {
+            removeTypingIndicator();
+            appendBotBubble('Sorry, something went wrong. Please try again in a moment.');
+          }
+        } catch {}
+      }
 
-            if (data.type === 'lead_captured') {
-              showLeadSuccess();
-            }
-
-            if (data.type === 'done') {
-              if (fullText) {
-                messages.push({ role: 'assistant', content: fullText });
-                saveMessages();
-              }
-            }
-
-            if (data.type === 'error') {
-              removeTypingIndicator();
-              appendBotBubble('Sorry, something went wrong. Please try again in a moment.');
-            }
-          } catch {}
+      if (response.body && typeof response.body.getReader === 'function') {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+          for (const line of lines) processLine(line);
         }
+        if (buffer) processLine(buffer);
+      } else {
+        const text = await response.text();
+        const lines = text.split('\n');
+        for (const line of lines) processLine(line);
       }
     } catch (error) {
       removeTypingIndicator();
