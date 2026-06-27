@@ -31,9 +31,14 @@
               <div id="cu-chat-status">Online</div>
             </div>
           </div>
-          <button id="cu-chat-close" aria-label="Close chat">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </button>
+          <div id="cu-chat-header-actions">
+            <button id="cu-chat-new" aria-label="New conversation" title="New conversation">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M9 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <button id="cu-chat-close" aria-label="Close chat">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
         </div>
         <div id="cu-chat-messages"></div>
         <form id="cu-chat-form">
@@ -72,6 +77,13 @@
       panel.setAttribute('aria-hidden', 'true');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.classList.remove('cu-chat-hidden');
+    });
+
+    document.getElementById('cu-chat-new').addEventListener('click', () => {
+      messages = [];
+      sessionStorage.removeItem('cu-chat');
+      document.getElementById('cu-chat-messages').textContent = '';
+      showGreeting();
     });
 
     form.addEventListener('submit', (e) => {

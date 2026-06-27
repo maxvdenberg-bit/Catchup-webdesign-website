@@ -553,7 +553,9 @@ h1, h2, h3, .font-display { font-family: 'Archivo Black', 'Arial Black', sans-se
   color: rgba(255,255,255,0.45);
   font-weight: 500;
 }
-#cu-chat-close {
+#cu-chat-header-actions { display: flex; align-items: center; gap: 0.25rem; }
+#cu-chat-close,
+#cu-chat-new {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -566,8 +568,10 @@ h1, h2, h3, .font-display { font-family: 'Archivo Black', 'Arial Black', sans-se
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
-#cu-chat-close:hover { background-color: rgba(255,255,255,0.08); color: #FFFFFF; }
-#cu-chat-close:focus-visible { outline: 2px solid #E8570A; outline-offset: 2px; }
+#cu-chat-close:hover,
+#cu-chat-new:hover { background-color: rgba(255,255,255,0.08); color: #FFFFFF; }
+#cu-chat-close:focus-visible,
+#cu-chat-new:focus-visible { outline: 2px solid #E8570A; outline-offset: 2px; }
 
 #cu-chat-messages {
   flex: 1;
